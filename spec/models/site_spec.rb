@@ -13,7 +13,8 @@ describe Site do
   end
 
   describe 'presentation' do
-    its(:allows) { should == %i(url code headers body redirect_count duration raw) }
+    its(:allows) { should == %i(url) }
+    its(:allows_json) { should == %i(url code headers body redirect_count duration raw) }
   end
 
   describe '#save' do
@@ -27,4 +28,13 @@ describe Site do
     end
   end
 
+  describe '#url' do
+    before do
+      subject.url = 'google.com'
+    end
+
+    it 'should httpify the url' do
+      expect(subject.url).to eq('http://google.com')
+    end
+  end
 end

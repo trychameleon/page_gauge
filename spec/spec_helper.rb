@@ -48,8 +48,13 @@ RSpec.configure do |config|
   Dir[Rails.root.join('app/models/**/*.rb')].each {|f| require f }
   Mongoid.models.map(&:create_indexes)
 
-  config.before(:each) { Sidekiq.redis {|r| r.flushall } }
-  config.before(:each) { Mongoid.models.map(&:delete_all) }
+  config.before(:each) do
+    Sidekiq.redis {|r| r.flushall }
+    Mongoid.models.map(&:delete_all)
+
+    allow(Typhoeus::Request).to receive(:new).and_return(instance_double(Typhoeus::Request, :run => Typhoeus::Response.new))
+  end
+
 
   # use :firefox => true as metadata to feature tests to run the test in /Applications/Firefox
   config.before(:each, :firefox => true) { change_driver.(:selenium) }

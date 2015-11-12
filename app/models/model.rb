@@ -6,6 +6,7 @@ class Model
     base.class_attribute :mongo_fields; base.mongo_fields = {}
     base.class_attribute :mongo_field_type_by_name; base.mongo_field_type_by_name = { '_id' => BSON::ObjectId, 'id' => BSON::ObjectId, 'created_at' => Time, 'updated_at' => Time, 'u_at' => Time }
     base.class_attribute :allows; base.allows = []
+    base.class_attribute :allows_json; base.allows_json = []
 
     base.send(:extend, ClassMethods)
     base.send(:include, InstanceMethods)
@@ -61,6 +62,13 @@ class Model
       options.each_pair {|name, klass| self.mongo_field_type_by_name[name.to_s] = klass }
 
       self.allows |= (names + options.keys).map(&:to_sym)
+    end
+
+    def allow_json(*names)
+      options = names.last.is_a?(Hash) ? names.pop : {}
+      options.each_pair {|name, klass| self.mongo_field_type_by_name[name.to_s] = klass }
+
+      self.allows_json |= (names + options.keys).map(&:to_sym)
     end
 
     def indexed(*args)
@@ -144,6 +152,10 @@ class Model
       hash[:updated_at] = self.updated_at
 
       self.class.allows.each do |name|
+        hash[name] = send(name)
+      end
+
+      self.class.allows_json.each do |name|
         hash[name] = send(name)
       end
 

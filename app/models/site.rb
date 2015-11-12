@@ -5,8 +5,17 @@ class Site < Model
 
   validates :url, :presence => true
 
-  allow *mongo_fields.values.map(&:keys).flatten
+  allow :url
+  allow_json *mongo_fields.values.map(&:keys).flatten
+
+  indexed :url, :uniq => true
 
   before_create -> { SiteFetch.new(self).run }
 
+  def url=(other)
+    other = other.presence || ''
+    other = "http://#{other}" unless other.blank? || /https?:\/\// === other
+
+    self[:url] = other
+  end
 end
