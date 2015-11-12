@@ -1,7 +1,7 @@
 class Site < Model
-  attrs String => { :url => :u, :code => :c, :headers => :h, :body => :b, :redirect_count => :rc },
+  attrs String => { :url => :u, :code => :c, :headers => :h, :body => :b, :marshaled_request => :mr },
     Float => { :duration => :d },
-    Array => { :marshaled_request => :mr }
+    Integer => { :redirect_count => :rc }
 
   validates :url, :presence => true
 

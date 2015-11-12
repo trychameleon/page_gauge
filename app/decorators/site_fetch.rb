@@ -14,6 +14,6 @@ class SiteFetch
     site.headers = response.response_headers
     site.redirect_count = response.redirect_count.to_s
     site.body = response.body
-    site.marshaled_request = request.marshal_dump
+    site.marshaled_request = Base64.encode64(Marshal.dump(request))
   end
 end
