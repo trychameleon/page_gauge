@@ -79,7 +79,7 @@ describe SiteFetch do
     it 'should have the raw response' do
       run
 
-      expect(site.raw).to eq(response.options)
+      expect(site.raw).to eq(JSON.parse(response.options.to_json))
     end
   end
 end
