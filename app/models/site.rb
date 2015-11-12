@@ -11,6 +11,7 @@ class Site < Model
   indexed :url, :uniq => true
 
   before_create -> { SiteFetch.new(self).run }
+  after_create  -> { SiteStats.perform_async(id) }
 
   def url=(other)
     other = (other.presence || '').downcase

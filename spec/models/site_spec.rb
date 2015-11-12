@@ -25,6 +25,12 @@ describe Site do
 
         subject.save
       end
+
+      it 'should update the site stats' do
+        expect(SiteStats).to receive(:perform_async).with(subject.id)
+
+        subject.save
+      end
     end
   end
 
