@@ -13,7 +13,7 @@ class Site < Model
   before_create -> { SiteFetch.new(self).run }
 
   def url=(other)
-    other = other.presence || ''
+    other = (other.presence || '').downcase
     other = "http://#{other}" unless other.blank? || /https?:\/\// === other
 
     self[:url] = other

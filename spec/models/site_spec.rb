@@ -36,5 +36,15 @@ describe Site do
     it 'should httpify the url' do
       expect(subject.url).to eq('http://google.com')
     end
+
+    describe 'for a wonky url' do
+      before do
+        subject.url = 'googlE.com/Hi'
+      end
+
+      it 'should convert to lower case' do
+        expect(subject.url).to eq('http://google.com/hi')
+      end
+    end
   end
 end
