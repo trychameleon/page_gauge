@@ -14,7 +14,7 @@ describe Site do
 
   describe 'presentation' do
     its(:allows) { should == %i(url) }
-    its(:allows_json) { should == %i(url code headers body redirect_count duration raw) }
+    its(:allows_json) { should == %i(url code headers body redirect_count marshaled duration) }
   end
 
   describe '#save' do

@@ -7,7 +7,7 @@ describe SiteFetch do
   let(:headers) { "Content-Type: text/html\nContent-Length: 3" }
   let(:response) { Typhoeus::Response.new(:response_code => 200, :body => body, :response_headers => headers, :total_time => 0.245, :redirect_count => 5) }
 
-  let!(:request) { instance_double(Typhoeus::Request, :run => response) }
+  let!(:request) { instance_double(Typhoeus::Request, :run => response, :marshal_dump => 'Marshaled content') }
 
   describe '.run' do
     let(:run) { site.save }
@@ -79,7 +79,7 @@ describe SiteFetch do
     it 'should have the raw response' do
       run
 
-      expect(site.raw).to eq(JSON.parse(response.options.to_json))
+      expect(site.marshaled).to eq('Marshaled content')
     end
   end
 end

@@ -14,6 +14,6 @@ class SiteFetch
     site.headers = response.response_headers
     site.redirect_count = response.redirect_count.to_s
     site.body = response.body
-    site.raw = JSON.parse(response.options.to_json)
+    site.marshaled = request.marshal_dump
   end
 end
