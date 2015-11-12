@@ -1,11 +1,12 @@
 class Site < Model
-  attrs String => { :url => :u, :code => :c, :headers => :h, :body => :b, :redirect_count => :rc, :marshaled => :m },
-    Float => { :duration => :d }
+  attrs String => { :url => :u, :code => :c, :headers => :h, :body => :b, :redirect_count => :rc },
+    Float => { :duration => :d },
+    Array => { :marshaled_request => :mr }
 
   validates :url, :presence => true
 
   allow :url
-  allow_json *mongo_fields.values.map(&:keys).flatten
+  allow_json *mongo_fields.values.map(&:keys).flatten - %i(marshaled_request)
 
   indexed :url, :uniq => true
 

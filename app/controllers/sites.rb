@@ -1,6 +1,9 @@
 class Sites < Application
   def create
-    json Site.where(:url => params[:url].downcase).
-      first_or_create(params.permit(*Site.allows))
+    url = params[:url]
+    url = "http://#{url}" unless /https?:\/\// === url
+
+    json Site.where(:url => url.downcase).first ||
+      Site.create(params.permit(*Site.allows))
   end
 end

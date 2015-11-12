@@ -52,7 +52,7 @@ RSpec.configure do |config|
     Sidekiq.redis {|r| r.flushall }
     Mongoid.models.map(&:delete_all)
 
-    allow(Typhoeus::Request).to receive(:new).and_return(instance_double(Typhoeus::Request, :run => Typhoeus::Response.new, :marshal_dump => 'XYZ'))
+    allow(Typhoeus::Request).to receive(:new).and_return(instance_double(Typhoeus::Request, :run => Typhoeus::Response.new, :marshal_dump => ['XYZ']))
   end
 
 
