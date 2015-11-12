@@ -1,7 +1,6 @@
 //= require jquery
 //= require bootstrap-sprockets
-//= require pre.js
-//= require aaron.js
-//= require brian.js
-//= require post.js
-var app = 'app';
+//= require pre
+//= require aaron
+//= require brian
+//= require post

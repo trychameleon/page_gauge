@@ -8,9 +8,12 @@ window.pagegauge = function(){
       content: ''
     },
     gauges: [],
-    init: function(){
-      $('#gauge_url').on('input', function(){
-        var url = $(this).val();
+    init: function() {
+      $('#gauge_button').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+
+        var url = $('#gauge_url').val();
 
         window.pagegauge.fetch(url);
         /*
