@@ -1,0 +1,9 @@
+$(function() {
+  var uid = window.localStorage.getItem('uid') ||
+    (window.localStorage.setItem('uid', Math.random().toString(36).replace(/[^a-z0-9]+/g, '')) || window.localStorage.getItem('uid'));
+
+  hookly.start("<%= Hookly.token %>", uid);
+  hookly.on('#stats', function(message) {
+    console.log('Realtime stats: ', message);
+  });
+});

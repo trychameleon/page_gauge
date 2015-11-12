@@ -9,6 +9,8 @@ gem 'puma'
 gem 'typhoeus'
 gem 'bugsnag'
 
+gem 'hookly'
+
 gem 'sidekiq'
 
 gem 'analytics-ruby', :require => 'segment'

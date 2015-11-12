@@ -90,6 +90,8 @@ GEM
       activesupport (>= 4.1.0)
     hashdiff (0.2.3)
     hitimes (1.2.3)
+    hookly (0.9.2)
+      typhoeus (~> 0.7)
     i18n (0.7.0)
     jquery-rails (4.0.5)
       rails-dom-testing (~> 1.0)
@@ -237,6 +239,7 @@ DEPENDENCIES
   bugsnag
   capybara
   factory_girl
+  hookly
   jquery-rails
   mock_redis
   mongoid (~> 5)

@@ -45,6 +45,4 @@ window.pagegauge = function() {
   };
 }();
 
-$(document).ready(function(){
-  window.pagegauge.init();
-});
+$(window.pagegauge.init);
