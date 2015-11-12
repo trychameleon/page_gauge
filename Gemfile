@@ -6,6 +6,7 @@ gem 'sass-rails'
 gem 'mongoid', '~> 5'
 gem 'puma'
 
+gem 'typhoeus'
 gem 'bugsnag'
 
 gem 'sidekiq'
