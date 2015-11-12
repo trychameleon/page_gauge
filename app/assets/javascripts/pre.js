@@ -9,8 +9,8 @@ window.pagegauge = function(){
     },
     gauges: [],
     init: function(){
-      $('#gauge_url').on('input', function(){
-        var url = $(this).val();
+      $('#gauge_button').on('click', function(){
+        var url = $('#gauge_url').val();
 
         window.pagegauge.fetch(url);
         /*
@@ -23,10 +23,9 @@ window.pagegauge = function(){
     },
     fetch: function(url){
       $.ajax('/sites/', {
-        data: {url: url},
+        data: { url: url },
         method: 'POST',
         success: function(){
-          debugger;
           window.pagegauge.gauge().then(window.pagegauge.completed());
         }
       })
@@ -46,6 +45,5 @@ window.pagegauge = function(){
     }
   };
 }();
-$(document).ready(function(){
-  window.pagegauge.init();
-});
+
+$(window.pagegauge.init);
