@@ -8,8 +8,11 @@ window.pagegauge = function(){
       content: ''
     },
     gauges: [],
-    init: function(){
-      $('#gauge_button').on('click', function(){
+    init: function() {
+      $('#gauge_button').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+
         var url = $('#gauge_url').val();
 
         window.pagegauge.fetch(url);
@@ -35,7 +38,7 @@ window.pagegauge = function(){
       for(var i = 0; i < this.gauges.length; i++){
         started_gauges.push(this.gauge[i]);
       }
-      return promise.all(started_gauges);
+      return Promise.all(started_gauges);
     },
     addgauge: function(gaugefn){
       this.gauges.push(gaugefn);
