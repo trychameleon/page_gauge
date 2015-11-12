@@ -17,6 +17,7 @@ gem 'analytics-ruby', :require => 'segment'
 gem 'slack-notifier'
 
 gem 'jquery-rails'
+gem 'lodash-rails'
 gem 'bootstrap-sass'
 
 group :assets do

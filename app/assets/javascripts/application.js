@@ -1,6 +1,7 @@
 //= require jquery
 //= require hookly
 // = require bootstrap-sprockets
+//= require lodash
 //= require pre
 //= require aaron
 //= require brian
