@@ -1,0 +1,8 @@
+test:
+  clients:
+    default:
+      database: <%= ENV['DATABASE_NAME_TEST'] || 'page_gauge_test' %>
+      hosts:
+        - localhost:27017
+      options:
+        max_pool_size: 1

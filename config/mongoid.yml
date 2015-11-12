@@ -1,0 +1,25 @@
+test:
+  clients:
+    default:
+      database: <%= ENV['DBNAME'] || 'page_gauge_test' %>
+      hosts:
+        - localhost:27017
+      options:
+        max_pool_size: 1
+
+development:
+  clients:
+    default:
+      database: <%= ENV['DBNAME'] || 'page_gauge_development' %>
+      hosts:
+        - localhost:27017
+      options:
+        max_pool_size: 2
+
+production:
+  clients:
+    default:
+      uri: <%= ENV['MONGODB_URL'] %>
+      options:
+        min_pool_size: 5
+        max_pool_size: 200

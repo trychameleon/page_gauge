@@ -1,0 +1,3 @@
+database:
+  override:
+    - cp config/mongoid.yml{.ci,}

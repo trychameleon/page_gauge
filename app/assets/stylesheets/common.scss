@@ -1,0 +1,50 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:300,200|Muli:300,200);
+
+body {
+  font-family: 'Lato', Arial, sans-serif;
+  background-color: #fafafa;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Lato', Arial, sans-serif;
+}
+
+a[disabled], a.disabled {
+  pointer-events: none;
+}
+
+button.btn:hover, button.btn:focus {
+  background-color: #7AABD5;
+  color: #486782;
+}
+
+.container {
+  padding-bottom: 60px;
+}
+
+.flash-message {
+  width: 60%;
+  height: 10px;
+  margin: 5px 15% 0 15%;
+}
+
+.status-dot {
+  vertical-align: middle;
+
+  &:before {
+    content: '\25cf';
+    font-size: 1.5em;
+  }
+}
+
+.nav-sidebar {
+  ul.tabs {
+    li {
+      text-transform: uppercase;
+
+      a:hover {
+        background-color: #fafafa;
+      }
+    }
+  }
+}
