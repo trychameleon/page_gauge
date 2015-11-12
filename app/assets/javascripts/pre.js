@@ -22,21 +22,24 @@ window.pagegauge = function(){
       });
     },
     fetch: function(url){
-      $.ajax('/sites/', {
+      var self = this;
+      self.page.requests.push($.ajax('/sites/', {
         data: {url: url},
         method: 'POST',
-        success: function(){
-          debugger;
-          window.pagegauge.gauge().then(window.pagegauge.completed());
+        success: function(results){
+          self.page.responses.push(results);
+          self.page.content = results.body;
+          window.pagegauge.gauge().then(window.pagegauge.completed);
         }
-      })
+      }));
     },
     gauge: function(){
-      var started_gauges = [];
+      var self = this,
+        started_gauges = [];
       for(var i = 0; i < this.gauges.length; i++){
-        started_gauges.push(this.gauge[i]);
+        started_gauges.push(this.gauges[i](self.page.content));
       }
-      return promise.all(started_gauges);
+      return Promise.all(started_gauges);
     },
     addgauge: function(gaugefn){
       this.gauges.push(gaugefn);
@@ -46,6 +49,9 @@ window.pagegauge = function(){
     }
   };
 }();
+
+window.pagegauge.addgauge(function(){return Promise.resolve("hello");});
+window.pagegauge.addgauge(function(){return Promise.resolve("world");});
 $(document).ready(function(){
   window.pagegauge.init();
 });
