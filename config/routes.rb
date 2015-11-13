@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   get 'site', :to => 'sites#show', :constraints => { :url => /.+/ }
 
   root :to => 'home#index'
+
+  match '*anything' => 'application#options', :via => [:options]
 end
