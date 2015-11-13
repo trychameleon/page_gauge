@@ -4,31 +4,31 @@ window.pagegauge.addGauge(function bodyLength(site) {
 
 window.pagegauge.addGauge(function isResponsive(site) {
   return new Promise(function(resolve) {
-
-    var matches = /<head>([\s\S]*)<\/head>/.exec(site.body);
-
-    if(!matches.length)
-      return resolve('No head content found');
-
-    var allStyles = '', sheets = [];
-
-    $.each($(matches[1]), function() {
-      var $this = $(this);
-
-      if(this.tagName === 'LINK' && $this.attr('rel') === 'stylesheet') {
-        var url =  pagegauge.util.buildUrl(site, $this.attr('href'));
-
-        sheets.push(pagegauge.createSite(url));
-      }
+    pagegauge.util.fetchAllStyles(site, function(styles) {
+      resolve(/@media/.test(styles) ? 'Is Responsive' : 'Is not Responsive')
     });
+  });
+});
 
-    Promise.all(sheets).then(function(datas) {
-      for(var i=0; i< datas.length; i++) {
-        allStyles += datas[i].site.body;
-        allStyles += "\n\n";
+window.pagegauge.addGauge(function hasColorSimplicity(site) {
+  return new Promise(function(resolve) {
+    pagegauge.util.fetchAllStyles(site, function(styles) {
+      var colors = {},
+        hexes = styles.match(/#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})/g) || [],
+        rgbs = styles.match(/rgba?\(\d+,\s*\d+,\s*\d+(?:,\s*\d+(?:\.\d+)?)?\)/g) || [];
+
+      hexes = hexes.concat.apply(hexes, rgbs);
+
+      for(var i=0; i<hexes.length; i++) {
+        var key = hexes[i].toLowerCase();
+
+        colors[key] || (colors[key] = 0);
+        colors[key] += 1;
       }
 
-      resolve(/@media/.test(allStyles) ? 'Is Responsive' : 'Is not Responsive');
+      console.log('We have colors!', colors);
+
+      resolve('Has #'+Object.keys(colors).length+' colors');
     });
   });
 });
