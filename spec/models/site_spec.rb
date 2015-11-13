@@ -13,8 +13,8 @@ describe Site do
   end
 
   describe 'presentation' do
-    its(:allows) { should == %i(url) }
-    its(:allows_json) { should == %i(url code headers body duration redirect_count) }
+    its(:allows) { should == %i(uid url) }
+    its(:allows_json) { should == %i(uid url code headers body duration redirect_count) }
   end
 
   describe '#save' do

@@ -1,6 +1,6 @@
 window.pagegauge = function() {
   return {
-    uid: getUID(),
+    uid: getUUID(),
     page: {
       url: '',
       requests: [],
@@ -8,6 +8,7 @@ window.pagegauge = function() {
       content: ''
     },
     util: {
+      uuid: getUUID,
       fetchAllStyles: function(site, done) {
         var matches = /<head>([\s\S]*)<\/head>/.exec(site.body);
 
@@ -99,7 +100,7 @@ window.pagegauge = function() {
 $(window.pagegauge.init);
 
 function r() { return Math.random().toString(36).replace(/[^a-z0-9]+/g, ''); }
-function getUID() {
+function getUUID() {
   return window.localStorage.getItem('uid') ||
     (window.localStorage.setItem('uid', r()+r()) || window.localStorage.getItem('uid'));
 }
