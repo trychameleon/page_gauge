@@ -1,4 +1,6 @@
 class Sites < Application
+  html :show
+
   def create
     url = params[:url]
     url = "http://#{url}" unless /https?:\/\// === url

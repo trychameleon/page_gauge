@@ -46,4 +46,18 @@ describe Sites do
       end
     end
   end
+
+  describe '#show' do
+    let(:site) { create(:site) }
+
+    let(:response) { get :show, :url => site.url }
+
+    it 'should be a 200' do
+      expect(response.code).to eq('200')
+    end
+
+    it 'should render the template' do
+      expect(response).to render_template('sites/show')
+    end
+  end
 end

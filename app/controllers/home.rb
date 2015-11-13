@@ -1,4 +1,4 @@
 class Home < Application
-  def index
-  end
+  html :index
+
 end
