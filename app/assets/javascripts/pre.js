@@ -53,6 +53,33 @@ window.pagegauge = function() {
         }
 
         return url + href;
+      },
+      getTopMenu: function(body){
+        var possibleNavSelectors = ['nav', 'menu'],
+            possibleNavs = [],
+            proudestParentMenu;
+
+        $(body).find('*').filter(function(){
+          var possibleNav = false;
+          for(var i = 0; i < possibleNavSelectors.length; i++ ){
+            if(this.id.match(possibleNavSelectors[i]) || this.className.match(possibleNavSelectors[i])){
+              possibleNav = true;
+            }
+          }
+          if(possibleNav && possibleNavs.indexOf(this) < 0 && this.children.length > 1){
+            possibleNavs.push(this);
+            return true;
+          }
+        });
+
+        //find shallowest descendant with most amount of children
+        for(var i = 0; i < possibleNavs.length; i++ ){
+          if(!proudestParentMenu || (possibleNavs[i].children.length > proudestParentMenu.children.length && $(proudestParentMenu).not(possibleNavs).length < 1)){
+            proudestParentMenu = possibleNavs[i];
+          }
+        };
+
+        return proudestParentMenu;
       }
     },
     gauges: [],

@@ -28,30 +28,30 @@ window.pagegauge.addGauge(function (site) {
 
 
 window.pagegauge.addGauge(function baseMenuSize(site) {
+  var bodyNoScript = /\<body([\s\S]*?)\<\/body\>/.exec(site.body)[0].replace(/\<script([\s\S]*?)\<\/script\>/g, '').replace(/\son(.*?)\"([\s\S]*?)\"/g, '');
+
+  return Promise.resolve(window.pagegauge.util.getTopMenu($(bodyNoScript)).children.length > 7 ? 0 : 1);
+});
+
+window.pagegauge.addGauge(function baseMenuDepth(site) {
   var bodyNoScript = /\<body([\s\S]*?)\<\/body\>/.exec(site.body)[0].replace(/\<script([\s\S]*?)\<\/script\>/g, '').replace(/\son(.*?)\"([\s\S]*?)\"/g, ''),
-      possibleNavSelectors = ['nav', 'menu'],
-      possibleNavs = [],
-      proudestParentMenu;
+      proudestParentMenu = window.pagegauge.util.getTopMenu($(bodyNoScript)),
+      depth;
 
-    $(bodyNoScript).find('*').filter(function(){
-      var possibleNav = false;
-      for(var i = 0; i < possibleNavSelectors.length; i++ ){
-        if(this.id.match(possibleNavSelectors[i]) || this.className.match(possibleNavSelectors[i])){
-          possibleNav = true;
-        }
-      }
-      if(possibleNav && possibleNavs.indexOf(this) < 0 && this.children.length > 1){
-        possibleNavs.push(this);
-        return true;
-      }
-    });
+  //from the proudestParent
+  var testMenuChildrenDepth = function(menu, level){
+    level = level || 1;
+    var children = $(menu).children(),
+        childDepth = [level];
+    //for each of children
+    for(var i = 0; i < children.length; i++){
+      childDepth.push(testMenuChildrenDepth(children[i], level+1));
+    }
+    return _.max(childDepth);
+  };
+  depth = testMenuChildrenDepth(proudestParentMenu);
 
-    //find shallowest descendant with most amount of children
-    for(var i = 0; i < possibleNavs.length; i++ ){
-      if(!proudestParentMenu || (possibleNavs[i].children.length > proudestParentMenu.children.length && $(proudestParentMenu).not(possibleNavs).length < 1)){
-        proudestParentMenu = possibleNavs[i];
-      }
-    };
+  var score = depth <= 3 ? 1 : depth < 6 ? 0.5 : 0;
 
-    return Promise.resolve(proudestParentMenu.children.length > 7 ? 0 : 1);
+  return Promise.resolve(score);
 });
