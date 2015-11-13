@@ -14,7 +14,7 @@ class Site < Model
   after_create  -> { SiteStats.perform_async(id) }
 
   def url=(other)
-    other = (other.presence || '').downcase
+    other = other.presence || ''
     other = "http://#{other}" unless other.blank? || /https?:\/\// === other
 
     self[:url] = other

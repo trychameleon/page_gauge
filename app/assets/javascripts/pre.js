@@ -7,6 +7,26 @@ window.pagegauge = function() {
       responses: [],
       content: ''
     },
+    util: {
+      buildUrl: function(site, href) {
+        var url = '';
+
+        if(/^\/\//.test(href)) {
+          url = 'https:';
+        } else if(!/https?:\/\//.test(href)) {
+          var a = document.createElement('a');
+          a.href = site.url;
+
+          url += a.hostname;
+
+          if(!/^\//.test(href)) {
+            url += '/';
+          }
+        }
+
+        return url + href;
+      }
+    },
     gauges: [],
     init: function() {
       $('#gauge_button').on('click', function(e){
@@ -18,14 +38,17 @@ window.pagegauge = function() {
         window.pagegauge.fetch(url);
       });
     },
-    fetch: function(url) {
-      $.ajax('/sites.json', {
+    createSite: function(url, success) {
+      return $.ajax('/sites.json', {
         data: { uid: pagegauge.uid, url: url },
         method: 'POST',
-        success: function(data) {
-          window.pagegauge.gauge(data.site).
-            then(window.pagegauge.completed);
-        }
+        success: success
+      });
+    },
+    fetch: function(url) {
+      pagegauge.createSite(url, function(data) {
+        window.pagegauge.gauge(data.site).
+          then(window.pagegauge.completed);
       });
     },
     gauge: function(site) {

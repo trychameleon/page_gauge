@@ -49,7 +49,7 @@ describe Site do
       end
 
       it 'should convert to lower case' do
-        expect(subject.url).to eq('http://google.com/hi')
+        expect(subject.url).to eq('http://googlE.com/Hi')
       end
     end
   end

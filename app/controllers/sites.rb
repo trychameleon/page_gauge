@@ -3,7 +3,7 @@ class Sites < Application
     url = params[:url]
     url = "http://#{url}" unless /https?:\/\// === url
 
-    json Site.where(:url => url.downcase).first ||
+    json Site.where(:url => url).first ||
       Site.create(params.permit(*Site.allows))
   end
 end
