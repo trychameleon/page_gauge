@@ -13,7 +13,7 @@ class SiteFetch
     site.duration = response.total_time
     site.headers = response.response_headers
     site.redirect_count = response.redirect_count.to_s
-    site.body = response.body.try(:force_encoding, 'UTF-8')
+    site.body = response.body.try(:force_encoding, 'ISO-8859-1').try(:encode, 'UTF-8')
     site.marshaled_request = Base64.encode64(Marshal.dump(request))
   end
 end
