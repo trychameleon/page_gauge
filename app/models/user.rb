@@ -1,7 +1,7 @@
 class User < Model
-  attrs String => { :uid => :d, :email => :e, :url => :u, :score => :s }
+  attrs String => { :uid => :d, :email => :e, :latest_url => :u }
 
-  allow :uid, :email, :url, :score
+  allow :uid, :email, :latest_url
 
   indexed :email, :uniq => true
 
