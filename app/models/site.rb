@@ -11,7 +11,7 @@ class Site < Model
   indexed :url, :uniq => true
 
   before_create -> { SiteFetch.new(self).run }
-  after_create  -> { SiteStats.perform_async(id) }
+  # after_create  -> { SiteStats.perform_async(id) } TODO Re-enable for the top-level site when stats are enabled (in the pagegauge.io front-end)
 
   def url=(other)
     other = other.presence || ''
